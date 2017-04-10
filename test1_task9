@@ -1,0 +1,10 @@
+    public static void task9()
+    {
+        Random generator = new Random();
+        int rand = generator.nextInt(50);
+        if (rand < 5) rand += 5;
+        System.out.println("Hello, world!\nAnd hi again");
+        for (int i =0; i<rand; i++)
+            System.out.print("!");
+        System.out.println();
+    }
