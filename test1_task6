@@ -1,0 +1,6 @@
+ public static char task6 (int a)
+    {
+        int result = '\\';
+        int code = result+a;
+        return (char)code;
+    }
