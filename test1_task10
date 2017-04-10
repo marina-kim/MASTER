@@ -1,0 +1,44 @@
+public static void task10() throws IOException {
+        List<Integer> arrayAges = new ArrayList<>();
+        int i=0;
+        int age = 0;
+        int max_age=0, min_age=0;
+        double sum = 0,ave_age=0;
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String inputData = new String();
+        String tmp, agestr;
+        System.out.println("Вводите Имя Фамилия Возраст");
+        System.out.println("Введите 'стоп' для завершения");
+        while (true) {
+            tmp =  br.readLine();
+            if (tmp.lastIndexOf(' ')<0)
+            {
+                System.out.println("ОШИБКА ВВОДА: нет пробелов\n");
+                break;
+            }
+            if (tmp.equalsIgnoreCase("стоп"))
+                break;
+            inputData = inputData+"\n"+tmp;
+            agestr = tmp.substring(tmp.lastIndexOf(' ')+1);
+            System.out.println(agestr);
+            arrayAges.add(Integer.parseInt(agestr));
+            i++;
+           // System.out.println(inputData);
+        }
+        System.out.println(inputData);
+        max_age = arrayAges.get(0);
+        min_age = arrayAges.get(0);
+        ave_age = arrayAges.get(0);
+        for (int j = 0; j<i;j++)
+        {
+            if (arrayAges.get(j)>max_age) max_age = arrayAges.get(j);
+            if (arrayAges.get(j)<min_age) min_age = arrayAges.get(j);
+            sum +=arrayAges.get(j);
+        }
+        ave_age = (sum/i)*100;
+        int avtmp = (int)Math.round(ave_age);
+        ave_age = (double)avtmp/100;
+
+        System.out.println("MAX AGE = " + max_age + " MIN AGE = " + min_age + " AVERAGE AGE = " + ave_age);
+    }
