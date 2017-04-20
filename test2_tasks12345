@@ -1,0 +1,286 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Random;
+import java.util.Scanner;
+
+import static java.lang.System.in;
+
+/**
+ * Created by Marina on 17.04.2017.
+ */
+public class TA_Test2 {
+    public static int n;
+
+    public static void main(String[] args) throws IOException {
+        if (args.length != 0)
+            n = Integer.parseInt(args[0]);
+        else
+            n = 5;
+        System.out.println("========\nTask 1:\n========");
+        task1();
+        System.out.println("========\nTask 2:\n========");
+        task2();
+        System.out.println("========\nTask 3:\n========");
+        task3();
+        System.out.println("========\nTask 4:\n========");
+        int kk = 0;
+        Scanner inSc;
+        while (true){
+            System.out.println("Input k:");
+            inSc = new Scanner(System.in);
+            if (inSc.hasNextInt()) {
+                kk = inSc.nextInt();
+                break;
+            }
+        }
+        System.out.println("BEFORE:");
+        Integer[][] array = new Integer[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                Random generator = new Random();
+                long rand = generator.nextInt(2*n + 1);
+                rand -=n;
+                if (rand > Integer.MAX_VALUE) rand--;
+                array[i][j] = (int)rand;
+                System.out.print(array[i][j] + " ");
+            }
+            System.out.println();
+        }
+        array = task4(array, kk);
+        System.out.println("AFTER:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(array[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("========\nTask 5:\n========");
+        for (Seasons sName : Seasons.values()) {
+            System.out.println("It's usually [" + sName.weather + "] in [" + sName + "]");
+        }
+        Seasons now = Seasons.SPRING;
+        now.previousSeason().seasonWeekend();
+        System.out.println(now.weatherOf());
+        now = Seasons.seasonByWeather("cool");
+        System.out.println(now);
+    }
+
+    /**
+     * task1():
+     * Input n strings from a console.
+     * Output strings with length less than average length, and their lengths.
+     */
+    public static void task1() throws IOException {
+        double ave_len = 0;
+        double sumlen = 0;
+        String[] array = new String[n];
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        for (int i = 0; i < n; i++) {
+            System.out.println("Input string #" + (i + 1));
+            String inputData;
+            inputData = br.readLine();
+            array[i] = inputData;
+            sumlen += inputData.length();
+        }
+        ave_len = sumlen / n;
+        for (int i = 0; i < n; i++) {
+            if (array[i].length() < ave_len)
+                System.out.println(array[i] + " => length = " + array[i].length() + " < " + ave_len);
+        }
+    }
+
+    /**
+     * task2():
+     * Input n strings from a console.
+     * Find count of strings, which contain only latin symbols.
+     * Find count of them, which contain the same number of vowels and consonants.
+     * (I mean that latin strings don't contain spaces and other extraneous symbols)
+     */
+    public static void task2() throws IOException {
+        int latin_count = 0;
+        int same_count = 0;
+        int tmp_vowels = 0;
+        int tmp_conson = 0;
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        for (int i = 0; i < n; i++) {
+            System.out.println("Input string #" + (i + 1));
+            String inputData = new String();
+            inputData = br.readLine();
+            tmp_vowels = 0;
+            tmp_conson = 0;
+            latin_count++;
+            for (int j = 0; j < inputData.length(); j++) {
+                int symbol = inputData.charAt(j);
+                if ((symbol >= 65 && symbol <= 90) || (symbol >= 97 && symbol <= 122)) {
+                    if (symbol == 65 || symbol == 69 || symbol == 73 || symbol == 79 || symbol == 85 || symbol == 89 ||
+                            symbol == 97 || symbol == 101 || symbol == 105 || symbol == 111 || symbol == 117 || symbol == 121)
+                        tmp_vowels++;
+                    else tmp_conson++;
+                } else {
+                    latin_count--;
+                    tmp_conson = 0;
+                    tmp_vowels = 1;
+                    break;
+                }
+            }
+            if (tmp_conson == tmp_vowels) same_count++;
+        }
+        System.out.println("Count of latin strings = " + latin_count);
+        System.out.println("Count of them with the same numbers of vowels and consonants = " + same_count);
+    }
+
+    /**
+     * task3():
+     * Input number from 1 to 12.
+     * Output name of the month with this number.
+     * Use switch operator. Control a correctness of input data.
+     */
+    public static void task3() throws IOException {
+        String number;
+        System.out.println("Input number from 1 to 12:");
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        number = br.readLine();
+        switch (number) {
+            case "1":
+                System.out.println("January");
+                break;
+            case "2":
+                System.out.println("February");
+                break;
+            case "3":
+                System.out.println("Mart");
+                break;
+            case "4":
+                System.out.println("April");
+                break;
+            case "5":
+                System.out.println("May");
+                break;
+            case "6":
+                System.out.println("June");
+                break;
+            case "7":
+                System.out.println("July");
+                break;
+            case "8":
+                System.out.println("August");
+                break;
+            case "9":
+                System.out.println("September");
+                break;
+            case "10":
+                System.out.println("October");
+                break;
+            case "11":
+                System.out.println("November");
+                break;
+            case "12":
+                System.out.println("December");
+                break;
+            default:
+                System.out.println("Incorrect input data");
+                break;
+        }
+    }
+
+    /**
+     * task4():
+     * Order the rows of the array in the order of increasing values
+     * of the elements of the k-th column.
+     * (I mean that array elements are integers)
+     */
+    public static Integer[][] task4(Integer[][] array, int k)  {
+        Integer[] temp;
+        if (k>n)
+        {
+            System.out.println("ERROR: Choose a column with existing number");
+            return array;
+        }
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (array[i][k-1]>(array[j][k-1])) {
+                    temp = array[i];
+                    array[i] = array[j];
+                    array[j] = temp;
+                }
+            }
+        }
+        return array;
+    }
+
+    /** task5:
+     * Create enum with more than 3 constants.
+     * Enum must contain constructor, fields and as minimum 2 methods.
+     */
+    public enum Seasons {
+        WINTER(90, "cold"), SPRING(92, "warm"), SUMMER(92, "hot"), AUTUMN(91, "cool");
+
+        Seasons(int days, String temperature) {
+            this.days = days;
+            this.weather = temperature;
+        }
+
+        private int days;
+        private String weather;
+
+        public Seasons previousSeason() {
+            switch (this) {
+                case WINTER:
+                    return AUTUMN;
+                case SPRING:
+                    return WINTER;
+                case SUMMER:
+                    return SPRING;
+                case AUTUMN:
+                    return SUMMER;
+                default:
+                    return WINTER;
+            }
+        }
+        public void seasonWeekend()
+        {
+            switch (this) {
+                case WINTER:
+                    System.out.println("Let's play snowballs and ski!");
+                    break;
+                case SPRING:
+                    System.out.println("Let's go to a picnic!");
+                    break;
+                case SUMMER:
+                    System.out.println("Let's swim and sunbath!");
+                    break;
+                case AUTUMN:
+                    System.out.println("Let's go to walk in a park and run through the puddles!");
+                    break;
+            }
+            System.out.println("Have fun in any weather!");
+        }
+        public String weatherOf()
+        {
+            return this.weather;
+        }
+        public static Seasons seasonByWeather(String weather) {
+            Seasons result;
+            switch (weather) {
+                case "cold":
+                    result = WINTER;
+                    break;
+                case "warm":
+                    result = SPRING;
+                    break;
+                case "hot":
+                    result = SUMMER;
+                    break;
+                case "cool":
+                    result = AUTUMN;
+                    break;
+                default:
+                    System.out.println("Wrong weather!");
+                    result = null;
+            }
+            return result;
+        }
+    }
+
+}
