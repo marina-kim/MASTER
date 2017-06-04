@@ -58,7 +58,11 @@ public class homework_ebay {
     }
 
     @Test
+    /*
+    Try to change for testing pull requests in git.
+     */
     public void task2() {
+        String tmp = new String("Testing git");
         driver.get(URL);
         WebElement gh = driver.findElement(By.xpath(XPATH_SEARCH));
         gh.clear();
