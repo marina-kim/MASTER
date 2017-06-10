@@ -2,10 +2,6 @@ package com.example.tests;
 
 import com.example.TestNgTestBase;
 import com.example.data_providers.DataProvidersForTestFilters;
-import com.example.pages.FilterSERP;
-import com.example.pages.MainPage;
-import com.example.pages.SERPage;
-import com.example.pages.SearchForm;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,7 +26,8 @@ public class TestCountryUSAFilter extends TestNgTestBase{
     {
         mainPage = new MainPage(driver);
         mainPage.openPage(baseUrl);
-        searchForm = new SearchForm(driver);
+        if (mainPage.isMainPageOpen())
+            searchForm = new SearchForm(driver);
     }
 
     /**
@@ -43,7 +40,7 @@ public class TestCountryUSAFilter extends TestNgTestBase{
     public void testFilterSnippetsCountryUSA(String request)
     {
         serPage = searchForm.search(request);
-        filterSERP = new FilterSERP(driver);
+        filterSERP = serPage.initFilters();
         serPage = filterSERP.filterByLocationUSA();
         List<String> snippetCountries = serPage.getSnippetCounries();
         for (String country: snippetCountries)
