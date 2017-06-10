@@ -2,11 +2,11 @@ package com.example.tests;
 
 import com.example.TestNgTestBase;
 import com.example.data_providers.DataProvidersForTestFilters;
-import com.example.pages.*;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,11 +25,11 @@ public class TestBuyNowFilter extends TestNgTestBase{
     private static final String BUY_NOW_ENG = new String("Купить сейчас");
 
     @BeforeMethod
-    public void setUp()
-    {
+    public void setUp(){
         mainPage = new MainPage(driver);
         mainPage.openPage(baseUrl);
-        searchForm = new SearchForm(driver);
+        if (mainPage.isMainPageOpen())
+            searchForm = new SearchForm(driver);
     }
 
     /**
@@ -47,7 +47,7 @@ public class TestBuyNowFilter extends TestNgTestBase{
     public void testFilterSnippetsBuyNow(String request)
     {
         serPage = searchForm.search(request);
-        filterSERP = new FilterSERP(driver);
+        filterSERP = serPage.initFilters();
         serPage = filterSERP.filterByBuyItNow();
         List<String> snippetFormats = serPage.getSnippetFormats();
         for (String format: snippetFormats)

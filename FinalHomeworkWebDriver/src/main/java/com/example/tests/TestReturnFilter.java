@@ -2,7 +2,6 @@ package com.example.tests;
 
 import com.example.TestNgTestBase;
 import com.example.data_providers.DataProvidersForTestFilters;
-import com.example.pages.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -29,7 +28,8 @@ public class TestReturnFilter extends TestNgTestBase {
     {
         mainPage = new MainPage(driver);
         mainPage.openPage(baseUrl);
-        searchForm = new SearchForm(driver);
+        if (mainPage.isMainPageOpen())
+            searchForm = new SearchForm(driver);
     }
 
     /**
@@ -43,7 +43,7 @@ public class TestReturnFilter extends TestNgTestBase {
     public void testFilterProductsReturnOption(String request)
     {
         serPage = searchForm.search(request);
-        filterSERP = new FilterSERP(driver);
+        filterSERP = serPage.initFilters();
         serPage = filterSERP.filterByReturnOption();
         List<String> snippetHrefs = serPage.getSnippetLinks();
         //for (String href: snippetHrefs)
