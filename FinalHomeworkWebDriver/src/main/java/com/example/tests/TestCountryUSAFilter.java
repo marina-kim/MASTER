@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class TestCountryUSAFilter extends TestNgTestBase{
     private MainPage mainPage;
-    private SearchForm searchForm;
     private FilterSERP filterSERP;
     private SERPage serPage;
     private static final String USA_RUS = new String("США");
@@ -28,8 +27,7 @@ public class TestCountryUSAFilter extends TestNgTestBase{
     public void setUp()
     {
         mainPage = new MainPage(driver);
-        searchForm = mainPage.openPage(baseUrl);
-        //searchForm = mainPage.searchForm;
+        mainPage.openPage(baseUrl);
     }
 
     /**
@@ -41,7 +39,7 @@ public class TestCountryUSAFilter extends TestNgTestBase{
             dataProvider = "dataForTestCiuntryUSAFilter")
     public void testFilterSnippetsCountryUSA(String request)
     {
-        serPage = searchForm.search(request);
+        serPage = mainPage.search(request);
         filterSERP = serPage.initFilters();
         serPage = filterSERP.filterByLocationUSA();
         List<String> snippetCountries = serPage.getSnippetCounries();

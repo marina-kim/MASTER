@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class TestCategoryFilter extends TestNgTestBase{
     private MainPage mainPage;
-    private SearchForm searchForm;
     private FilterSERP filterSERP;
     private SERPage serPage;
     private ProductPage productPage;
@@ -23,8 +22,7 @@ public class TestCategoryFilter extends TestNgTestBase{
     public void setUp()
     {
         mainPage = new MainPage(driver);
-        searchForm = mainPage.openPage(baseUrl);
-        //searchForm = mainPage.searchForm;
+        mainPage.openPage(baseUrl);
     }
 
     /**
@@ -36,7 +34,7 @@ public class TestCategoryFilter extends TestNgTestBase{
             dataProvider = "dataForTestCategoryFilter")
     public void testFilterProductsCategories(String request)
     {
-        serPage = searchForm.search(request);
+        serPage = mainPage.search(request);
         filterSERP = serPage.initFilters();
         String category = filterSERP.getCategoryName();
         serPage = filterSERP.filterByCategory();

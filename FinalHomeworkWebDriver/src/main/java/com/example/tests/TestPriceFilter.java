@@ -16,7 +16,6 @@ import static org.assertj.core.api.Assertions.*;
  */
 public class TestPriceFilter extends TestNgTestBase {
     private MainPage mainPage;
-    private SearchForm searchForm;
     private FilterSERP filterSERP;
     private SERPage serPage;
 
@@ -24,8 +23,7 @@ public class TestPriceFilter extends TestNgTestBase {
     public void setUp()
     {
         mainPage = new MainPage(driver);
-        searchForm = mainPage.openPage(baseUrl);
-        //searchForm = mainPage.searchForm;
+        mainPage.openPage(baseUrl);
     }
 
     /**
@@ -37,7 +35,7 @@ public class TestPriceFilter extends TestNgTestBase {
             dataProvider = "dataForTestPriceFilter")
     public void testFilterSnippetsPrices(String request, float min, float max)
     {
-        serPage = searchForm.search(request);
+        serPage = mainPage.search(request);
         filterSERP = serPage.initFilters();
         serPage = filterSERP.filterByPrice(min,max);
         List<Float> snippetPrices = serPage.getSnippetPrices();

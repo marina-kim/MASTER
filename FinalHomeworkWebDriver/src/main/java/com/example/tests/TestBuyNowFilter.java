@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class TestBuyNowFilter extends TestNgTestBase{
     private MainPage mainPage;
-    private SearchForm searchForm;
     private FilterSERP filterSERP;
     private SERPage serPage;
     private ProductPage productPage;
@@ -26,7 +25,7 @@ public class TestBuyNowFilter extends TestNgTestBase{
     @BeforeMethod
     public void setUp(){
         mainPage = new MainPage(driver);
-        searchForm = mainPage.openPage(baseUrl);
+        mainPage.openPage(baseUrl);
         //searchForm = mainPage.searchForm;
     }
 
@@ -44,7 +43,7 @@ public class TestBuyNowFilter extends TestNgTestBase{
             dataProvider = "dataForTestBuyNowFilter")
     public void testFilterSnippetsBuyNow(String request)
     {
-        serPage = searchForm.search(request);
+        serPage = mainPage.search(request);
         filterSERP = serPage.initFilters();
         serPage = filterSERP.filterByBuyItNow();
         List<String> snippetFormats = serPage.getSnippetFormats();
@@ -64,7 +63,7 @@ public class TestBuyNowFilter extends TestNgTestBase{
             dataProvider = "dataForTestBuyNowFilter")
     public void testFilterProductsBuyNow(String request)
     {
-        serPage = searchForm.search(request);
+        serPage = mainPage.search(request);
         filterSERP = serPage.initFilters();
         serPage = filterSERP.filterByBuyItNow();
         List<String> snippetHrefs = serPage.getSnippetLinks();

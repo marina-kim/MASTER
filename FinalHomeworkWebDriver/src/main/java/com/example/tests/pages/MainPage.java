@@ -34,6 +34,10 @@ public class MainPage {
         return searchForm;
     }
 
+    public SERPage search(String request) {
+        return searchForm.search(request);
+    }
+
     public boolean isMainPageOpen() {
         String defaultMainTitle = new String("ebay");
         String realTitle = driver.getTitle();

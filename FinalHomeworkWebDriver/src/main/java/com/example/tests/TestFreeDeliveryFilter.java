@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class TestFreeDeliveryFilter extends TestNgTestBase{
     private MainPage mainPage;
-    private SearchForm searchForm;
     private FilterSERP filterSERP;
     private SERPage serPage;
     private ProductPage productPage;
@@ -25,8 +24,7 @@ public class TestFreeDeliveryFilter extends TestNgTestBase{
     public void setUp()
     {
         mainPage = new MainPage(driver);
-        searchForm = mainPage.openPage(baseUrl);
-        //searchForm = mainPage.searchForm;
+        mainPage.openPage(baseUrl);
     }
 
     /**
@@ -39,7 +37,7 @@ public class TestFreeDeliveryFilter extends TestNgTestBase{
 
     public void testFilterProductsFreeDelivery(String request)
     {
-        serPage = searchForm.search(request);
+        serPage = mainPage.search(request);
         filterSERP = serPage.initFilters();
         serPage = filterSERP.filterByDeliveryFree();
         List<String> snippetHrefs = serPage.getSnippetLinks();
