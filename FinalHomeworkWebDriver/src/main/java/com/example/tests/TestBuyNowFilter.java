@@ -26,9 +26,8 @@ public class TestBuyNowFilter extends TestNgTestBase{
     @BeforeMethod
     public void setUp(){
         mainPage = new MainPage(driver);
-        mainPage.openPage(baseUrl);
-        if (mainPage.isMainPageOpen())
-            searchForm = new SearchForm(driver);
+        searchForm = mainPage.openPage(baseUrl);
+        //searchForm = mainPage.searchForm;
     }
 
     /**
@@ -66,7 +65,7 @@ public class TestBuyNowFilter extends TestNgTestBase{
     public void testFilterProductsBuyNow(String request)
     {
         serPage = searchForm.search(request);
-        filterSERP = new FilterSERP(driver);
+        filterSERP = serPage.initFilters();
         serPage = filterSERP.filterByBuyItNow();
         List<String> snippetHrefs = serPage.getSnippetLinks();
         //for (String href: snippetHrefs)

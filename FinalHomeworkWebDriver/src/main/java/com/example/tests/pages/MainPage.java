@@ -18,14 +18,20 @@ import java.util.Properties;
  */
 public class MainPage {
 
+    public SearchForm searchForm;
     private WebDriver driver;
     public MainPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public void openPage(String URL){
+    public SearchForm openPage(String URL){
         this.driver.get(URL);
+        if (!this.isMainPageOpen()) {
+            this.driver.get(URL);
+        }
+        searchForm = new SearchForm(driver);
+        return searchForm;
     }
 
     public boolean isMainPageOpen() {

@@ -24,9 +24,8 @@ public class TestPriceFilter extends TestNgTestBase {
     public void setUp()
     {
         mainPage = new MainPage(driver);
-        mainPage.openPage(baseUrl);
-        if (mainPage.isMainPageOpen())
-            searchForm = new SearchForm(driver);
+        searchForm = mainPage.openPage(baseUrl);
+        //searchForm = mainPage.searchForm;
     }
 
     /**
